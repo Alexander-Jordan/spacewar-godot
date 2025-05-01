@@ -11,6 +11,7 @@ config_version=5
 [application]
 
 config/name="Spacewar!"
+run/main_scene="uid://1qik0ccbibv1"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 config/icon="res://icon.svg"
 
@@ -39,3 +40,4 @@ folder_colors={
 
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
+environment/defaults/default_clear_color=Color(0.1088, 0.117333, 0.16, 1)
