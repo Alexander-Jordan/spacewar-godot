@@ -22,6 +22,19 @@ window/size/window_width_override=512
 window/size/window_height_override=512
 window/stretch/mode="viewport"
 
+[file_customization]
+
+folder_colors={
+"res://assets/": "red",
+"res://common/": "orange",
+"res://config/": "yellow",
+"res://entities/": "green",
+"res://localization/": "teal",
+"res://stages/": "blue",
+"res://ui/": "purple",
+"res://utilities/": "pink"
+}
+
 [rendering]
 
 renderer/rendering_method="gl_compatibility"
