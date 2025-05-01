@@ -7,6 +7,7 @@ class_name Ship extends Node2D
 var steering: float = 0.0
 var throttle: float = 0.0
 var velocity: Vector2 = Vector2.ZERO
+var velocity_max: float = 3
 
 func _process(delta: float) -> void:
 	accelerate(delta)
@@ -15,6 +16,7 @@ func _process(delta: float) -> void:
 func accelerate(delta: float) -> void:
 	throttle = -Input.get_axis(player + '_up', player + '_down')
 	velocity += self.transform.x * throttle * speed * delta
+	velocity = velocity.clamp(Vector2(-velocity_max, -velocity_max), Vector2(velocity_max, velocity_max))
 	position += velocity
 
 func steer(delta: float) -> void:
