@@ -5,3 +5,9 @@
 [node name="Main" type="Node2D"]
 
 [node name="Ship" parent="." instance=ExtResource("1_72s8x")]
+position = Vector2(32, 256)
+
+[node name="Ship2" parent="." instance=ExtResource("1_72s8x")]
+position = Vector2(480, 256)
+rotation = 3.14159
+player = "p2"
