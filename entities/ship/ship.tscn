@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://w2xu50meddru"]
+
+[ext_resource type="Texture2D" uid="uid://bro7nacyxkyr7" path="res://entities/ship/ship.png" id="1_805ym"]
+[ext_resource type="Script" uid="uid://eghdb135e6by" path="res://common/destruct/destructor_2d.gd" id="2_tivcy"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_alltn"]
+size = Vector2(12, 12)
+
+[node name="Ship" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_805ym")
+
+[node name="Destructor2D" type="Area2D" parent="."]
+script = ExtResource("2_tivcy")
+metadata/_custom_type_script = "uid://eghdb135e6by"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Destructor2D"]
+shape = SubResource("RectangleShape2D_alltn")
