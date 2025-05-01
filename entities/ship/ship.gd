@@ -3,6 +3,10 @@ class_name Ship extends Node2D
 @export_enum('p1', 'p2') var player: String = 'p1'
 @export var speed: int = 2
 @export var rotation_speed: int = 10
+@export var torpedo_spawner: Spawner2D
+
+@onready var destructor_2d: Destructor2D = $Destructor2D
+@onready var spawn_point: Vector2 = position
 
 var steering: float = 0.0
 var throttle: float = 0.0
@@ -13,11 +17,27 @@ func _process(delta: float) -> void:
 	accelerate(delta)
 	steer(delta)
 
+func _ready() -> void:
+	destructor_2d.destroyed.connect(func(): call_deferred('despawn'))
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed(player + '_fire'):
+		torpedo_spawner.spawn(position + (self.transform.x * 10), self.transform.x)
+
 func accelerate(delta: float) -> void:
 	throttle = -Input.get_axis(player + '_up', player + '_down')
 	velocity += self.transform.x * throttle * speed * delta
 	velocity = velocity.clamp(Vector2(-velocity_max, -velocity_max), Vector2(velocity_max, velocity_max))
 	position += velocity
+
+func despawn() -> void:
+	visible = false
+	process_mode = Node.PROCESS_MODE_DISABLED
+
+func reset() -> void:
+	position = spawn_point
+	visible = true
+	process_mode = Node.PROCESS_MODE_INHERIT
 
 func steer(delta: float) -> void:
 	steering = Input.get_axis(player + '_left', player + '_right')
