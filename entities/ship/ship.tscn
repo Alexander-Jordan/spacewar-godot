@@ -1,11 +1,40 @@
-[gd_scene load_steps=5 format=3 uid="uid://w2xu50meddru"]
+[gd_scene load_steps=9 format=3 uid="uid://w2xu50meddru"]
 
 [ext_resource type="Texture2D" uid="uid://bro7nacyxkyr7" path="res://entities/ship/ship.png" id="1_805ym"]
 [ext_resource type="Script" uid="uid://bqaphc4yc1xp8" path="res://entities/ship/ship.gd" id="1_alltn"]
 [ext_resource type="Script" uid="uid://eghdb135e6by" path="res://common/destruct/destructor_2d.gd" id="2_tivcy"]
+[ext_resource type="Texture2D" uid="uid://bvo7rh0ovmeaq" path="res://entities/torpedo/torpedo.png" id="4_u0oul"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_alltn"]
 size = Vector2(12, 12)
+
+[sub_resource type="Gradient" id="Gradient_3if2u"]
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_tua1r"]
+gradient = SubResource("Gradient_3if2u")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_53e7a"]
+lifetime_randomness = 0.25
+particle_flag_disable_z = true
+emission_shape = 2
+emission_sphere_radius = 2.0
+angle_min = -180.0
+angle_max = 180.0
+direction = Vector3(-1, 0, 0)
+spread = 5.0
+initial_velocity_min = 75.0
+initial_velocity_max = 100.0
+gravity = Vector3(0, 0, 0)
+linear_accel_min = -10.0
+linear_accel_max = 10.0
+radial_accel_min = -10.0
+radial_accel_max = 10.0
+tangential_accel_min = -10.0
+tangential_accel_max = 10.0
+scale_min = 0.5
+scale_over_velocity_min = 0.25
+scale_over_velocity_max = 1.0
+color_ramp = SubResource("GradientTexture1D_tua1r")
 
 [node name="Ship" type="Node2D"]
 script = ExtResource("1_alltn")
@@ -17,6 +46,14 @@ metadata/_custom_type_script = "uid://eghdb135e6by"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Destructor2D"]
 shape = SubResource("RectangleShape2D_alltn")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+show_behind_parent = true
+position = Vector2(-5, 0)
+emitting = false
+texture = ExtResource("4_u0oul")
+lifetime = 0.1
+process_material = SubResource("ParticleProcessMaterial_53e7a")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_805ym")

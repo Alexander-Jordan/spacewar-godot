@@ -1,5 +1,6 @@
 class_name Ship extends Node2D
 
+@export var color: Color = Color(1, 1, 1, 1)
 @export var planet: Planet
 @export_enum('p1', 'p2') var player: String = 'p1'
 @export var speed: int = 2
@@ -7,12 +8,19 @@ class_name Ship extends Node2D
 @export var torpedo_spawner: Spawner2D
 
 @onready var destructor_2d: Destructor2D = $Destructor2D
+@onready var gpu_particles_2d: GPUParticles2D = $GPUParticles2D
 @onready var spawn_point: Vector2 = position
 @onready var spawn_rotation: float = rotation
 @onready var timer: Timer = $Timer
 
 var steering: float = 0.0
 var throttle: float = 0.0
+var throttle_forward: bool = false:
+	set(tf):
+		if tf == throttle_forward:
+			return
+		throttle_forward = tf
+		gpu_particles_2d.emitting = tf
 var velocity: Vector2 = Vector2.ZERO
 var velocity_max: float = 3
 
@@ -28,6 +36,9 @@ func _process(delta: float) -> void:
 func _ready() -> void:
 	destructor_2d.destroyed.connect(func(): call_deferred('despawn'))
 	timer.timeout.connect(reset)
+	
+	self.modulate = color
+	gpu_particles_2d.modulate = color
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed(player + '_fire'):
@@ -35,6 +46,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func accelerate(delta: float) -> void:
 	throttle = -Input.get_axis(player + '_up', player + '_down')
+	throttle_forward = throttle > 0
 	velocity += self.transform.x * throttle * speed * delta
 	velocity = velocity.clamp(Vector2(-velocity_max, -velocity_max), Vector2(velocity_max, velocity_max))
 
@@ -45,6 +57,7 @@ func apply_gravity(delta: float) -> void:
 	velocity += gravity_force * delta
 
 func despawn() -> void:
+	throttle_forward = false
 	visible = false
 	process_mode = Node.PROCESS_MODE_DISABLED
 	timer.start()
