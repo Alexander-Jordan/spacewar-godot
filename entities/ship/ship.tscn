@@ -11,12 +11,12 @@ size = Vector2(12, 12)
 script = ExtResource("1_alltn")
 metadata/_custom_type_script = "uid://bqaphc4yc1xp8"
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("1_805ym")
-
 [node name="Destructor2D" type="Area2D" parent="."]
 script = ExtResource("2_tivcy")
 metadata/_custom_type_script = "uid://eghdb135e6by"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Destructor2D"]
 shape = SubResource("RectangleShape2D_alltn")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_805ym")
