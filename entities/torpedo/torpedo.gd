@@ -8,7 +8,8 @@ class_name Torpedo extends Spawnable2D
 @onready var timer: Timer = $Timer
 
 func _process(delta: float) -> void:
-	root_node.position += direction.normalized() * speed * delta
+	position += direction.normalized() * speed * delta
+	screen_wrap()
 
 func _ready() -> void:
 	destructor_2d.destructed.connect(func():
@@ -24,3 +25,7 @@ func _ready() -> void:
 		timer.start()
 	)
 	timer.timeout.connect(func(): call_deferred('despawn'))
+
+func screen_wrap() -> void:
+	position.x = wrapf(position.x, 0, 512)
+	position.y = wrapf(position.y, 0, 512)

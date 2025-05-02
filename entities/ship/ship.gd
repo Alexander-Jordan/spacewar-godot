@@ -20,6 +20,8 @@ func _process(delta: float) -> void:
 	steer(delta)
 	
 	position += velocity
+	
+	screen_wrap()
 
 func _ready() -> void:
 	destructor_2d.destroyed.connect(func(): call_deferred('despawn'))
@@ -47,6 +49,10 @@ func reset() -> void:
 	position = spawn_point
 	visible = true
 	process_mode = Node.PROCESS_MODE_INHERIT
+
+func screen_wrap() -> void:
+	position.x = wrapf(position.x, 0, 512)
+	position.y = wrapf(position.y, 0, 512)
 
 func steer(delta: float) -> void:
 	steering = Input.get_axis(player + '_left', player + '_right')
