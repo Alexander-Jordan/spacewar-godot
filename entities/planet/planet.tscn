@@ -1,0 +1,57 @@
+[gd_scene load_steps=9 format=3 uid="uid://bygo01wk70enf"]
+
+[ext_resource type="Script" uid="uid://diolvxyq6v8c5" path="res://entities/planet/planet.gd" id="1_iwji2"]
+[ext_resource type="Texture2D" uid="uid://c7bq8jwyy7hjj" path="res://entities/planet/planet.png" id="2_1p7wy"]
+[ext_resource type="Script" uid="uid://eghdb135e6by" path="res://common/destruct/destructor_2d.gd" id="3_itihs"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_itihs"]
+atlas = ExtResource("2_1p7wy")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g43px"]
+atlas = ExtResource("2_1p7wy")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_agge8"]
+atlas = ExtResource("2_1p7wy")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_gq23p"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_itihs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g43px")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_agge8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g43px")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_g43px"]
+radius = 14.0
+
+[node name="Planet" type="Node2D"]
+script = ExtResource("1_iwji2")
+metadata/_custom_type_script = "uid://diolvxyq6v8c5"
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_gq23p")
+autoplay = "default"
+frame_progress = 0.799164
+
+[node name="Destructor2D" type="Area2D" parent="."]
+script = ExtResource("3_itihs")
+disabled = true
+metadata/_custom_type_script = "uid://eghdb135e6by"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Destructor2D"]
+shape = SubResource("CircleShape2D_g43px")
