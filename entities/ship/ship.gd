@@ -8,6 +8,8 @@ class_name Ship extends Node2D
 
 @onready var destructor_2d: Destructor2D = $Destructor2D
 @onready var spawn_point: Vector2 = position
+@onready var spawn_rotation: float = rotation
+@onready var timer: Timer = $Timer
 
 var steering: float = 0.0
 var throttle: float = 0.0
@@ -25,6 +27,7 @@ func _process(delta: float) -> void:
 
 func _ready() -> void:
 	destructor_2d.destroyed.connect(func(): call_deferred('despawn'))
+	timer.timeout.connect(reset)
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed(player + '_fire'):
@@ -44,9 +47,12 @@ func apply_gravity(delta: float) -> void:
 func despawn() -> void:
 	visible = false
 	process_mode = Node.PROCESS_MODE_DISABLED
+	timer.start()
 
 func reset() -> void:
+	rotation = spawn_rotation
 	position = spawn_point
+	velocity = Vector2.ZERO
 	visible = true
 	process_mode = Node.PROCESS_MODE_INHERIT
 
