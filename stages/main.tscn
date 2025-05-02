@@ -1,13 +1,22 @@
-[gd_scene load_steps=2 format=3 uid="uid://1qik0ccbibv1"]
+[gd_scene load_steps=4 format=3 uid="uid://1qik0ccbibv1"]
 
 [ext_resource type="PackedScene" uid="uid://w2xu50meddru" path="res://entities/ship/ship.tscn" id="1_72s8x"]
+[ext_resource type="Script" uid="uid://dnpfep1pihk30" path="res://common/spawnable/spawner_2d.gd" id="2_7iyax"]
+[ext_resource type="PackedScene" uid="uid://cxmuml076iij8" path="res://entities/torpedo/torpedo.tscn" id="3_0oqm6"]
 
 [node name="Main" type="Node2D"]
 
-[node name="Ship" parent="." instance=ExtResource("1_72s8x")]
+[node name="Ship" parent="." node_paths=PackedStringArray("torpedo_spawner") instance=ExtResource("1_72s8x")]
 position = Vector2(32, 256)
+torpedo_spawner = NodePath("../torpedo_spawner")
 
-[node name="Ship2" parent="." instance=ExtResource("1_72s8x")]
+[node name="Ship2" parent="." node_paths=PackedStringArray("torpedo_spawner") instance=ExtResource("1_72s8x")]
 position = Vector2(480, 256)
 rotation = 3.14159
 player = "p2"
+torpedo_spawner = NodePath("../torpedo_spawner")
+
+[node name="torpedo_spawner" type="Node2D" parent="."]
+script = ExtResource("2_7iyax")
+spawnable_scene = ExtResource("3_0oqm6")
+metadata/_custom_type_script = "uid://dnpfep1pihk30"
