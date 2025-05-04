@@ -9,9 +9,11 @@ class_name Ship extends Node2D
 @onready var destructor_2d: Destructor2D = $Destructor2D
 @onready var gpu_particles_explosion: GPUParticles2D = $gpu_particles_explosion
 @onready var gpu_particles_thrust: GPUParticles2D = $gpu_particles_thrust
+@onready var random_audio_player_2d: RandomAudioPlayer2D = $RandomAudioPlayer2D
 @onready var spawn_point: Vector2 = position
 @onready var spawn_rotation: float = rotation
 @onready var sprite_2d: Sprite2D = $Sprite2D
+@onready var thrust_audio_stream_player: ThrustAudioStreamPlayer = $ThrustAudioStreamPlayer
 @onready var timer: Timer = $Timer
 
 var steering: float = 0.0
@@ -21,6 +23,10 @@ var throttle_forward: bool = false:
 		if tf == throttle_forward:
 			return
 		throttle_forward = tf
+		if tf:
+			thrust_audio_stream_player.start_thrust()
+		else:
+			thrust_audio_stream_player.end_thrust()
 		gpu_particles_thrust.emitting = tf
 var velocity: Vector2 = Vector2.ZERO
 var velocity_max: float = 3
@@ -58,6 +64,8 @@ func apply_gravity(delta: float) -> void:
 	velocity += gravity_force * delta
 
 func despawn() -> void:
+	random_audio_player_2d.play_random_audio_and_await_finished()
+	thrust_audio_stream_player.stop()
 	throttle_forward = false
 	sprite_2d.visible = false
 	process_mode = Node.PROCESS_MODE_DISABLED
