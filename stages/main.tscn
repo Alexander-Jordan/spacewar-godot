@@ -1,10 +1,12 @@
-[gd_scene load_steps=6 format=3 uid="uid://1qik0ccbibv1"]
+[gd_scene load_steps=8 format=3 uid="uid://1qik0ccbibv1"]
 
 [ext_resource type="PackedScene" uid="uid://w2xu50meddru" path="res://entities/ship/ship.tscn" id="1_72s8x"]
 [ext_resource type="AudioStream" uid="uid://dtofqfhmtabyv" path="res://assets/music/pause-screen-228431.mp3" id="1_fejr8"]
 [ext_resource type="Script" uid="uid://dnpfep1pihk30" path="res://common/spawnable/spawner_2d.gd" id="2_7iyax"]
 [ext_resource type="PackedScene" uid="uid://cxmuml076iij8" path="res://entities/torpedo/torpedo.tscn" id="3_0oqm6"]
 [ext_resource type="PackedScene" uid="uid://bygo01wk70enf" path="res://entities/planet/planet.tscn" id="4_0oqm6"]
+[ext_resource type="PackedScene" uid="uid://btdx5amecp7s4" path="res://ui/menu/ui_menu.tscn" id="6_5sjox"]
+[ext_resource type="PackedScene" uid="uid://wtivff0db0po" path="res://ui/gameplay/ui_gameplay.tscn" id="7_byaf2"]
 
 [node name="Main" type="Node2D"]
 
@@ -34,3 +36,10 @@ metadata/_custom_type_script = "uid://dnpfep1pihk30"
 
 [node name="Planet" parent="." instance=ExtResource("4_0oqm6")]
 position = Vector2(256, 256)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="UIMenu" parent="CanvasLayer" instance=ExtResource("6_5sjox")]
+
+[node name="UIGameplay" parent="CanvasLayer" instance=ExtResource("7_byaf2")]
+visible = false

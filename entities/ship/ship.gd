@@ -16,6 +16,7 @@ class_name Ship extends Node2D
 @onready var thrust_audio_stream_player: ThrustAudioStreamPlayer = $ThrustAudioStreamPlayer
 @onready var timer: Timer = $Timer
 
+var is_spawned: bool = true
 var steering: float = 0.0
 var throttle: float = 0.0
 var throttle_forward: bool = false:
@@ -42,6 +43,11 @@ func _process(delta: float) -> void:
 
 func _ready() -> void:
 	destructor_2d.destroyed.connect(func(): gpu_particles_explosion.emitting = true; call_deferred('despawn'))
+	GM.state_changed.connect(func(state: GM.State):
+		match state:
+			GM.State.PLAYING:
+				reset()
+	)
 	timer.timeout.connect(reset)
 	
 	gpu_particles_explosion.modulate = self.modulate
@@ -64,12 +70,20 @@ func apply_gravity(delta: float) -> void:
 	velocity += gravity_force * delta
 
 func despawn() -> void:
+	if !is_spawned:
+		return
+	
+	if player == 'p1':
+		GM.lives_p1 -= 1
+	else:
+		GM.lives_p2 -= 1
 	random_audio_player_2d.play_random_audio_and_await_finished()
 	thrust_audio_stream_player.stop()
 	throttle_forward = false
 	sprite_2d.visible = false
 	process_mode = Node.PROCESS_MODE_DISABLED
 	timer.start()
+	is_spawned = false
 
 func reset() -> void:
 	rotation = spawn_rotation
@@ -77,6 +91,7 @@ func reset() -> void:
 	velocity = Vector2.ZERO
 	sprite_2d.visible = true
 	process_mode = Node.PROCESS_MODE_INHERIT
+	is_spawned = true
 
 func screen_wrap() -> void:
 	position.x = wrapf(position.x, 0, 512)
