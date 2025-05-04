@@ -1,6 +1,5 @@
 class_name Ship extends Node2D
 
-@export var color: Color = Color(1, 1, 1, 1)
 @export var planet: Planet
 @export_enum('p1', 'p2') var player: String = 'p1'
 @export var speed: int = 2
@@ -37,8 +36,7 @@ func _ready() -> void:
 	destructor_2d.destroyed.connect(func(): call_deferred('despawn'))
 	timer.timeout.connect(reset)
 	
-	self.modulate = color
-	gpu_particles_2d.modulate = color
+	gpu_particles_2d.modulate = self.modulate
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed(player + '_fire'):

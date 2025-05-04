@@ -8,15 +8,15 @@
 [node name="Main" type="Node2D"]
 
 [node name="Ship" parent="." node_paths=PackedStringArray("planet", "torpedo_spawner") instance=ExtResource("1_72s8x")]
+modulate = Color(0.36, 1, 0.36, 1)
 position = Vector2(32, 256)
-color = Color(0.5155, 1, 0.43, 1)
 planet = NodePath("../Planet")
 torpedo_spawner = NodePath("../torpedo_spawner")
 
 [node name="Ship2" parent="." node_paths=PackedStringArray("planet", "torpedo_spawner") instance=ExtResource("1_72s8x")]
+modulate = Color(0, 1, 1, 1)
 position = Vector2(480, 256)
 rotation = 3.14159
-color = Color(0.5, 1, 0.941667, 1)
 planet = NodePath("../Planet")
 player = "p2"
 torpedo_spawner = NodePath("../torpedo_spawner")
