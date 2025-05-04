@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://w2xu50meddru"]
+[gd_scene load_steps=12 format=3 uid="uid://w2xu50meddru"]
 
 [ext_resource type="Texture2D" uid="uid://bro7nacyxkyr7" path="res://entities/ship/ship.png" id="1_805ym"]
 [ext_resource type="Script" uid="uid://bqaphc4yc1xp8" path="res://entities/ship/ship.gd" id="1_alltn"]
@@ -7,6 +7,33 @@
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_alltn"]
 size = Vector2(12, 12)
+
+[sub_resource type="Curve" id="Curve_u0oul"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_3if2u"]
+curve = SubResource("Curve_u0oul")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_u0oul"]
+particle_flag_disable_z = true
+emission_shape = 6
+emission_ring_axis = Vector3(0, 0, 1)
+emission_ring_height = 1.0
+emission_ring_radius = 1.0
+emission_ring_inner_radius = 0.0
+emission_ring_cone_angle = 90.0
+angle_min = -45.0
+angle_max = 45.0
+spread = 180.0
+initial_velocity_min = 64.0
+initial_velocity_max = 128.0
+gravity = Vector3(0, 0, 0)
+damping_min = 100.0
+damping_max = 100.0
+scale_max = 4.0
+scale_over_velocity_max = 20.0
+scale_over_velocity_curve = SubResource("CurveTexture_3if2u")
 
 [sub_resource type="Gradient" id="Gradient_3if2u"]
 
@@ -47,7 +74,16 @@ metadata/_custom_type_script = "uid://eghdb135e6by"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Destructor2D"]
 shape = SubResource("RectangleShape2D_alltn")
 
-[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+[node name="gpu_particles_explosion" type="GPUParticles2D" parent="."]
+process_mode = 1
+emitting = false
+amount = 32
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_u0oul")
+
+[node name="gpu_particles_thrust" type="GPUParticles2D" parent="."]
+process_mode = 1
 show_behind_parent = true
 position = Vector2(-5, 0)
 emitting = false

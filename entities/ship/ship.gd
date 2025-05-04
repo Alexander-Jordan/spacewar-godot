@@ -7,9 +7,11 @@ class_name Ship extends Node2D
 @export var torpedo_spawner: Spawner2D
 
 @onready var destructor_2d: Destructor2D = $Destructor2D
-@onready var gpu_particles_2d: GPUParticles2D = $GPUParticles2D
+@onready var gpu_particles_explosion: GPUParticles2D = $gpu_particles_explosion
+@onready var gpu_particles_thrust: GPUParticles2D = $gpu_particles_thrust
 @onready var spawn_point: Vector2 = position
 @onready var spawn_rotation: float = rotation
+@onready var sprite_2d: Sprite2D = $Sprite2D
 @onready var timer: Timer = $Timer
 
 var steering: float = 0.0
@@ -19,7 +21,7 @@ var throttle_forward: bool = false:
 		if tf == throttle_forward:
 			return
 		throttle_forward = tf
-		gpu_particles_2d.emitting = tf
+		gpu_particles_thrust.emitting = tf
 var velocity: Vector2 = Vector2.ZERO
 var velocity_max: float = 3
 
@@ -33,10 +35,11 @@ func _process(delta: float) -> void:
 	screen_wrap()
 
 func _ready() -> void:
-	destructor_2d.destroyed.connect(func(): call_deferred('despawn'))
+	destructor_2d.destroyed.connect(func(): gpu_particles_explosion.emitting = true; call_deferred('despawn'))
 	timer.timeout.connect(reset)
 	
-	gpu_particles_2d.modulate = self.modulate
+	gpu_particles_explosion.modulate = self.modulate
+	gpu_particles_thrust.modulate = self.modulate
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed(player + '_fire'):
@@ -56,7 +59,7 @@ func apply_gravity(delta: float) -> void:
 
 func despawn() -> void:
 	throttle_forward = false
-	visible = false
+	sprite_2d.visible = false
 	process_mode = Node.PROCESS_MODE_DISABLED
 	timer.start()
 
@@ -64,7 +67,7 @@ func reset() -> void:
 	rotation = spawn_rotation
 	position = spawn_point
 	velocity = Vector2.ZERO
-	visible = true
+	sprite_2d.visible = true
 	process_mode = Node.PROCESS_MODE_INHERIT
 
 func screen_wrap() -> void:
