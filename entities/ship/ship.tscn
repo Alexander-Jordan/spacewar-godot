@@ -100,6 +100,7 @@ process_material = SubResource("ParticleProcessMaterial_53e7a")
 
 [node name="RandomAudioPlayer2D" type="AudioStreamPlayer2D" parent="."]
 process_mode = 1
+bus = &"sfx"
 script = ExtResource("3_53e7a")
 audio_streams = Array[AudioStream]([ExtResource("4_1h6wo"), ExtResource("6_bvpd1"), ExtResource("7_uexpk")])
 metadata/_custom_type_script = "uid://dcd0awshy7bd1"
@@ -109,6 +110,7 @@ texture = ExtResource("1_805ym")
 
 [node name="ThrustAudioStreamPlayer" type="AudioStreamPlayer2D" parent="."]
 process_mode = 1
+bus = &"sfx"
 script = ExtResource("7_1h6wo")
 stream_loop = ExtResource("2_tua1r")
 stream_end = ExtResource("9_bvpd1")

@@ -1,11 +1,17 @@
-[gd_scene load_steps=5 format=3 uid="uid://1qik0ccbibv1"]
+[gd_scene load_steps=6 format=3 uid="uid://1qik0ccbibv1"]
 
 [ext_resource type="PackedScene" uid="uid://w2xu50meddru" path="res://entities/ship/ship.tscn" id="1_72s8x"]
+[ext_resource type="AudioStream" uid="uid://dtofqfhmtabyv" path="res://assets/music/pause-screen-228431.mp3" id="1_fejr8"]
 [ext_resource type="Script" uid="uid://dnpfep1pihk30" path="res://common/spawnable/spawner_2d.gd" id="2_7iyax"]
 [ext_resource type="PackedScene" uid="uid://cxmuml076iij8" path="res://entities/torpedo/torpedo.tscn" id="3_0oqm6"]
 [ext_resource type="PackedScene" uid="uid://bygo01wk70enf" path="res://entities/planet/planet.tscn" id="4_0oqm6"]
 
 [node name="Main" type="Node2D"]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("1_fejr8")
+autoplay = true
+bus = &"music"
 
 [node name="Ship" parent="." node_paths=PackedStringArray("planet", "torpedo_spawner") instance=ExtResource("1_72s8x")]
 modulate = Color(0.36, 1, 0.36, 1)
