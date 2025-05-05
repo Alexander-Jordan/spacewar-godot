@@ -1,11 +1,74 @@
-[gd_scene load_steps=5 format=3 uid="uid://w2xu50meddru"]
+[gd_scene load_steps=19 format=3 uid="uid://w2xu50meddru"]
 
 [ext_resource type="Texture2D" uid="uid://bro7nacyxkyr7" path="res://entities/ship/ship.png" id="1_805ym"]
 [ext_resource type="Script" uid="uid://bqaphc4yc1xp8" path="res://entities/ship/ship.gd" id="1_alltn"]
 [ext_resource type="Script" uid="uid://eghdb135e6by" path="res://common/destruct/destructor_2d.gd" id="2_tivcy"]
+[ext_resource type="AudioStream" uid="uid://b23qo7lu1d343" path="res://entities/ship/thrust.wav" id="2_tua1r"]
+[ext_resource type="Script" uid="uid://dcd0awshy7bd1" path="res://common/random_audio_player/random_audio_player_2d.gd" id="3_53e7a"]
+[ext_resource type="AudioStream" uid="uid://crlem0rpqms8y" path="res://entities/ship/explosion.wav" id="4_1h6wo"]
+[ext_resource type="Texture2D" uid="uid://bvo7rh0ovmeaq" path="res://entities/torpedo/torpedo.png" id="4_u0oul"]
+[ext_resource type="AudioStream" uid="uid://ctwaj1s73nssr" path="res://entities/ship/explosion_2.wav" id="6_bvpd1"]
+[ext_resource type="Script" uid="uid://uvpawo3wm1t7" path="res://entities/ship/thrust_audio_stream_player.gd" id="7_1h6wo"]
+[ext_resource type="AudioStream" uid="uid://bj28yride3kpi" path="res://entities/ship/explosion_3.wav" id="7_uexpk"]
+[ext_resource type="AudioStream" uid="uid://bif2itw4u0g7o" path="res://entities/ship/thrust_end.wav" id="9_bvpd1"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_alltn"]
 size = Vector2(12, 12)
+
+[sub_resource type="Curve" id="Curve_u0oul"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_3if2u"]
+curve = SubResource("Curve_u0oul")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_u0oul"]
+particle_flag_disable_z = true
+emission_shape = 6
+emission_ring_axis = Vector3(0, 0, 1)
+emission_ring_height = 1.0
+emission_ring_radius = 1.0
+emission_ring_inner_radius = 0.0
+emission_ring_cone_angle = 90.0
+angle_min = -45.0
+angle_max = 45.0
+spread = 180.0
+initial_velocity_min = 64.0
+initial_velocity_max = 128.0
+gravity = Vector3(0, 0, 0)
+damping_min = 100.0
+damping_max = 100.0
+scale_max = 4.0
+scale_over_velocity_max = 20.0
+scale_over_velocity_curve = SubResource("CurveTexture_3if2u")
+
+[sub_resource type="Gradient" id="Gradient_3if2u"]
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_tua1r"]
+gradient = SubResource("Gradient_3if2u")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_53e7a"]
+lifetime_randomness = 0.25
+particle_flag_disable_z = true
+emission_shape = 2
+emission_sphere_radius = 2.0
+angle_min = -180.0
+angle_max = 180.0
+direction = Vector3(-1, 0, 0)
+spread = 5.0
+initial_velocity_min = 75.0
+initial_velocity_max = 100.0
+gravity = Vector3(0, 0, 0)
+linear_accel_min = -10.0
+linear_accel_max = 10.0
+radial_accel_min = -10.0
+radial_accel_max = 10.0
+tangential_accel_min = -10.0
+tangential_accel_max = 10.0
+scale_min = 0.5
+scale_over_velocity_min = 0.25
+scale_over_velocity_max = 1.0
+color_ramp = SubResource("GradientTexture1D_tua1r")
 
 [node name="Ship" type="Node2D"]
 script = ExtResource("1_alltn")
@@ -18,5 +81,42 @@ metadata/_custom_type_script = "uid://eghdb135e6by"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Destructor2D"]
 shape = SubResource("RectangleShape2D_alltn")
 
+[node name="gpu_particles_explosion" type="GPUParticles2D" parent="."]
+process_mode = 1
+emitting = false
+amount = 32
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_u0oul")
+
+[node name="gpu_particles_thrust" type="GPUParticles2D" parent="."]
+process_mode = 1
+show_behind_parent = true
+position = Vector2(-5, 0)
+emitting = false
+texture = ExtResource("4_u0oul")
+lifetime = 0.1
+process_material = SubResource("ParticleProcessMaterial_53e7a")
+
+[node name="RandomAudioPlayer2D" type="AudioStreamPlayer2D" parent="."]
+process_mode = 1
+bus = &"sfx"
+script = ExtResource("3_53e7a")
+audio_streams = Array[AudioStream]([ExtResource("4_1h6wo"), ExtResource("6_bvpd1"), ExtResource("7_uexpk")])
+metadata/_custom_type_script = "uid://dcd0awshy7bd1"
+
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_805ym")
+
+[node name="ThrustAudioStreamPlayer" type="AudioStreamPlayer2D" parent="."]
+process_mode = 1
+bus = &"sfx"
+script = ExtResource("7_1h6wo")
+stream_loop = ExtResource("2_tua1r")
+stream_end = ExtResource("9_bvpd1")
+metadata/_custom_type_script = "uid://uvpawo3wm1t7"
+
+[node name="Timer" type="Timer" parent="."]
+process_mode = 1
+wait_time = 2.0
+one_shot = true

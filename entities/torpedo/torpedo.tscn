@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://cxmuml076iij8"]
+[gd_scene load_steps=7 format=3 uid="uid://cxmuml076iij8"]
 
 [ext_resource type="Script" uid="uid://oolpubst6lay" path="res://entities/torpedo/torpedo.gd" id="1_pcahl"]
 [ext_resource type="Script" uid="uid://eghdb135e6by" path="res://common/destruct/destructor_2d.gd" id="2_5d145"]
+[ext_resource type="AudioStream" uid="uid://dfed7l2vlet7m" path="res://entities/torpedo/laserShoot.wav" id="2_v8k1w"]
 [ext_resource type="Script" uid="uid://dcd0awshy7bd1" path="res://common/random_audio_player/random_audio_player_2d.gd" id="3_bacl2"]
 [ext_resource type="Texture2D" uid="uid://bvo7rh0ovmeaq" path="res://entities/torpedo/torpedo.png" id="3_j3n64"]
 
@@ -10,6 +11,7 @@ size = Vector2(4, 2)
 
 [node name="Torpedo" type="Node2D"]
 script = ExtResource("1_pcahl")
+audio_stream_launch = ExtResource("2_v8k1w")
 metadata/_custom_type_script = "uid://oolpubst6lay"
 
 [node name="Destructor2D" type="Area2D" parent="."]
@@ -20,6 +22,7 @@ metadata/_custom_type_script = "uid://eghdb135e6by"
 shape = SubResource("RectangleShape2D_j3n64")
 
 [node name="RandomAudioPlayer2D" type="AudioStreamPlayer2D" parent="."]
+bus = &"sfx"
 script = ExtResource("3_bacl2")
 metadata/_custom_type_script = "uid://dcd0awshy7bd1"
 

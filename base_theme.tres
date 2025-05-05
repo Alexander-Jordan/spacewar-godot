@@ -1,0 +1,6 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://bof0eci1j2ytx"]
+
+[ext_resource type="FontFile" uid="uid://cikvchcawcess" path="res://assets/fonts/dogica/OTF/dogica.otf" id="1_6qegq"]
+
+[resource]
+default_font = ExtResource("1_6qegq")
