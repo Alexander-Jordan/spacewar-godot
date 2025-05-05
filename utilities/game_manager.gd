@@ -9,7 +9,7 @@ enum State {
 
 var lives_p1: int = 3:
 	set(l):
-		if l < 0 or l == lives_p1:
+		if l < 0 or l == lives_p1 or state != State.PLAYING:
 			return
 		lives_p1 = l
 		lives_p1_changed.emit(l)
@@ -17,7 +17,7 @@ var lives_p1: int = 3:
 			state = State.P2_WIN
 var lives_p2: int = 3:
 	set(l):
-		if l < 0 or l == lives_p2:
+		if l < 0 or l == lives_p2 or state != State.PLAYING:
 			return
 		lives_p2 = l
 		lives_p2_changed.emit(l)

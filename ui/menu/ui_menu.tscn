@@ -37,7 +37,3 @@ size_flags_vertical = 6
 [node name="button_start" type="Button" parent="VBoxContainer/VBoxContainer"]
 layout_mode = 2
 text = "START"
-
-[node name="button_exit" type="Button" parent="VBoxContainer/VBoxContainer"]
-layout_mode = 2
-text = "EXIT"
