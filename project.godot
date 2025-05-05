@@ -13,7 +13,9 @@ config_version=5
 config/name="Spacewar!"
 run/main_scene="uid://1qik0ccbibv1"
 config/features=PackedStringArray("4.4", "GL Compatibility")
-config/icon="res://icon.svg"
+boot_splash/image="uid://dq8rdg6dug2nk"
+config/icon="uid://dq8rdg6dug2nk"
+boot_splash/minimum_display_time=3000
 
 [autoload]
 
