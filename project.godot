@@ -8,11 +8,15 @@
 
 config_version=5
 
+[animation]
+
+compatibility/default_parent_skeleton_in_mesh_instance_3d=true
+
 [application]
 
 config/name="Spacewar!"
 run/main_scene="uid://1qik0ccbibv1"
-config/features=PackedStringArray("4.4", "GL Compatibility")
+config/features=PackedStringArray("4.6", "GL Compatibility")
 boot_splash/image="uid://dq8rdg6dug2nk"
 config/icon="uid://dq8rdg6dug2nk"
 boot_splash/minimum_display_time=3000
